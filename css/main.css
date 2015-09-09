@@ -1,0 +1,104 @@
+body {
+    color: #555;
+    font: normal 10pt Arial,Helvetica,sans-serif;
+    background: #EFEFEF;
+    padding-top: 70px;
+}
+@media only screen and (max-width: 800px) {
+    
+    /* Force table to not be like tables anymore */
+    .grid-view table,
+    .grid-view thead,
+    .grid-view tbody,
+    .grid-view th,
+    .grid-view td,
+    .grid-view tr {
+        display: block;
+    }
+
+    /* Hide table headers (but not display: none;, for accessibility) */
+    .grid-view .table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .grid-view tr { border: 1px solid #ccc; }
+
+    .grid-view .table td {
+        /* Behave like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+        white-space: normal;
+        text-align:left !important;
+    }
+
+    .grid-view .table td:before {
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align:left;
+        font-weight: bold;
+    }
+
+    /*Label the data */
+    .grid-view .table td:before { content: attr(data-title); }
+}
+
+.grid-view tfoot td {
+    background-color: #dff0d8;
+    color: #468847;
+    border-color: #d6e9c6;
+    font-size: 14px;
+    font-weight: bold;
+}
+.grid-view thead th {
+    text-align: center;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    color: #3a87ad;
+}
+@media only screen and (max-width: 359px) {
+    .label {
+        display: block !important;
+        width: 113px !important;
+        white-space: nowrap; 
+        overflow: hidden; 
+        text-overflow: ellipsis;
+    }
+}
+@media print { 
+    .navbar {
+        display: none;
+    }
+    
+    .grid-view thead th {
+        color: #000;
+        background-color: #fff;
+        border-color: #555555 !important;
+    }
+    
+    .grid-view td, 
+    .grid-view table {
+        border-color: #555555 !important;
+    }
+    
+    .grid-view tfoot {
+        display: table-footer-group;
+    }
+}
+.detail-view .label,
+.grid-view .label {
+    letter-spacing: 1px;
+    font-size: 85%;
+}
+.grid-view .button-column  {
+    min-width: 80px;
+}
