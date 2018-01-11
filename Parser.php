@@ -19,27 +19,6 @@ class Parser
         '/' => 2,
     ];
 
-    private $rules;
-
-    private $prevValue = '';
-
-    public function generateString($rules, $start)
-    {
-        $this->rules = $rules;
-
-        if (!isset($this->rules[$start])) {
-            throw new Exception('Start does not exist');
-        }
-        $key = array_rand($this->rules[$start]);
-        $part = $this->rules[$start][$key];
-
-        $re = '/((<[a-z]+>))/';
-        $result = preg_replace_callback($re, function ($match) use ($rules) {
-            return $this->generateString($rules, $match[1]);
-        }, $part);
-        return $result;
-    }
-
     public function evaluate($input)
     {
         $input = preg_replace('/\s+/', '', $input);
@@ -127,19 +106,6 @@ class Parser
     }
 }
 
-$rules = [
-    '<expr>'   => ['<term>', '<term><add><term>'],
-    '<term>'   => ['<factor>', '<factor><mult><factor>', '<factor><mult><term>'],
-    '<factor>' => ['<neg>', '-<neg>'],
-    '<neg>'    => ['<number>', '(<expr>)'],
-    '<add>'    => ['+', '-'],
-    '<mult>'   => ['*', '/'],
-    '<number>' => ['<digit>', '<number><digit>'],
-    '<digit>'  => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-];
-
 $parser = new Parser();
-// Generate an expression by BNF
-$expression = $parser->generateString($rules, '<expr>');
 // Evaluate an expression
 $value = $parser->evaluate('200+12*((1/8)+1)-19');
