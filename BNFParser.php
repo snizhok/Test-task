@@ -22,7 +22,7 @@ class BNFParser
     protected $adds = ['+', '-'];
 
     protected $result;
-    public $expression;
+    protected $expression;
 
     public function evaluate($expression)
     {
@@ -30,7 +30,7 @@ class BNFParser
         return $this->expr();
     }
 
-    public function expr()
+    protected function expr()
     {
         $result = $this->term();
         if (!strlen($this->expression)) {
@@ -121,7 +121,7 @@ class BNFParser
         return $this->number();
     }
 
-    public function number()
+    protected function number()
     {
         if (strlen($this->expression)) {
             $digit = substr($this->expression, 0, 1);
